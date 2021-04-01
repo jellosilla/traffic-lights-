@@ -3,6 +3,7 @@ input.onButtonPressed(Button.A, function () {
     if (traffic == 1) {
         while (true) {
             pins.digitalWritePin(DigitalPin.P0, 1)
+            // when i press b one time ths code will put an arrow for about 10 to 12 seconds 
             basic.showLeds(`
                 . . # . .
                 . # # # .
@@ -52,7 +53,7 @@ input.onButtonPressed(Button.A, function () {
                 basic.pause(100)
             }
             pins.digitalWritePin(DigitalPin.P1, 0)
-            // on red you will have to wait for 4 seconds after the 4 second it will go bac to green
+            // on red you will have to wait for 13 to 15 seconds after the time  it will go bac to green
             pins.digitalWritePin(DigitalPin.P2, 1)
             basic.pause(100)
             basic.showLeds(`
@@ -138,8 +139,6 @@ input.onButtonPressed(Button.A, function () {
             pins.digitalWritePin(DigitalPin.P2, 0)
             basic.pause(100)
         }
-    } else if (false) {
-    	
     }
     basic.clearScreen()
 })
