@@ -1,12 +1,24 @@
-let traffic = 0
-let yellow = 0
-let walking = 0
+// when a button is pressed the cycle will be GYR and after red it will show "don't walk"
 input.onButtonPressed(Button.A, function () {
-    // on the yellow there is 4 seconds of you slowing down 
-    while (true) {
-        traffic = 0
-        if (traffic >= 0) {
+    if (traffic == 1) {
+        while (true) {
             pins.digitalWritePin(DigitalPin.P0, 1)
+            basic.showLeds(`
+                . . # . .
+                . # # # .
+                # # # # #
+                . . # . .
+                . . # . .
+                `)
+            basic.pause(2000)
+            basic.showLeds(`
+                . . # . .
+                . # # # .
+                # # # # #
+                . . # . .
+                . . # . .
+                `)
+            basic.pause(2000)
             basic.showLeds(`
                 . . # . .
                 . # # # .
@@ -33,14 +45,14 @@ input.onButtonPressed(Button.A, function () {
             pins.digitalWritePin(DigitalPin.P0, 0)
             pins.digitalWritePin(DigitalPin.P1, 1)
             basic.pause(2000)
-            traffic = 4
+            traffic = 10
             while (traffic >= 0) {
                 basic.showNumber(traffic)
                 traffic += -1
                 basic.pause(100)
             }
             pins.digitalWritePin(DigitalPin.P1, 0)
-            // on red you will have to wit for 4 seconds it will go back to green light  
+            // on red you will have to wait for 4 seconds after the 4 second it will go bac to green
             pins.digitalWritePin(DigitalPin.P2, 1)
             basic.pause(100)
             basic.showLeds(`
@@ -74,42 +86,112 @@ input.onButtonPressed(Button.A, function () {
                 # # # # #
                 # # # # #
                 `)
+            basic.pause(2000)
+            basic.showLeds(`
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
+            basic.pause(2000)
+            basic.showLeds(`
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
             pins.digitalWritePin(DigitalPin.P2, 0)
-            basic.showString("don't walk ")
-        } else {
-            basic.clearScreen()
+            basic.showString("STOP")
         }
-    }
-})
-input.onButtonPressed(Button.AB, function () {
-    yellow = 15
-    while (yellow >= 1) {
-        basic.showNumber(yellow)
-        walking += -1
-        basic.pause(100)
-        pins.digitalWritePin(DigitalPin.P0, 1)
-        basic.pause(100)
-        pins.digitalWritePin(DigitalPin.P0, 1)
-        basic.pause(100)
-    }
-})
-// when a pressed you will have 15second to walk across and after that the screen will be cleared and after that it will go back to the cycle of the RYG forever 
-input.onButtonPressed(Button.B, function () {
-    traffic += 1
-    if (traffic >= 1) {
+    } else if (traffic == 2) {
         walking = 15
-        while (true) {
-            pins.digitalWritePin(DigitalPin.P1, 1)
+        while (walking >= 1) {
+            pins.digitalWritePin(DigitalPin.P0, 1)
             basic.showNumber(walking)
             walking += -1
+            basic.pause(500)
+        }
+        basic.showString("STOP WALKING")
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    } else if (traffic == 3) {
+        yellow = 15
+        while (yellow >= 0) {
+            basic.showNumber(yellow)
+            yellow += -1
+            basic.pause(100)
+            pins.digitalWritePin(DigitalPin.P0, 1)
+            basic.pause(100)
+            pins.digitalWritePin(DigitalPin.P0, 0)
             basic.pause(100)
         }
-        basic.showLeds(`
-            . # # # .
-            # # . # #
-            # . # . #
-            # # . # #
-            . # # # .
-            `)
+    } else if (traffic == 4) {
+        // when B is pressed 4 time this code wil be the to active and it will flash red 
+        red = 15
+        while (red >= 0) {
+            basic.showNumber(red)
+            red += -1
+            basic.pause(100)
+            pins.digitalWritePin(DigitalPin.P2, 1)
+            basic.pause(100)
+            pins.digitalWritePin(DigitalPin.P2, 0)
+            basic.pause(100)
+        }
+    } else if (false) {
+    	
     }
+    basic.clearScreen()
 })
+// when b pressed you will have 15seconds to walk across and after that there will be a sign "STOP"
+input.onButtonPressed(Button.B, function () {
+    traffic += 1
+})
+let red = 0
+let yellow = 0
+let walking = 0
+let traffic = 0
+traffic = 0
+basic.showLeds(`
+    . . # . .
+    . . # . .
+    . . # . .
+    . # # # .
+    . . # . .
+    `)
+basic.pause(100)
+basic.showLeds(`
+    . . # . .
+    . . # . .
+    . # # # .
+    . . # . .
+    . . . . .
+    `)
+basic.pause(100)
+basic.showLeds(`
+    . . # . .
+    . # # # .
+    . . # . .
+    . . . . .
+    . . . . .
+    `)
+basic.pause(100)
+basic.showLeds(`
+    . # # # .
+    . . # . .
+    . . . . .
+    . . . . .
+    . . . . .
+    `)
+basic.pause(100)
+basic.showLeds(`
+    . . # . .
+    . . . . .
+    . . . . .
+    . . . . .
+    . . . . .
+    `)
+basic.pause(100)
+basic.showIcon(IconNames.Happy)
+basic.pause(100)
+basic.clearScreen()
